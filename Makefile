@@ -7,11 +7,20 @@ SRCS_DIR = src/
 SRCS_BN_DIR = src_bonus/
 OBJS_DIR = obj/
 LIBFT = libft
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
-LIBS = $(LIBMLX)/libmlx42.a -lglfw -L "/Users/carmarqu/.brew/opt/glfw/lib/"
+#LIBS = $(LIBMLX)/libmlx42.a -lglfw -L "/Users/carmarqu/.brew/opt/glfw/lib/"
 
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+    LIBS = $(LIBMLX)/libmlx42.a -lglfw \
+           -framework Cocoa -framework OpenGL -framework IOKit
+    HEADERS += -I/usr/local/Cellar/glfw/3.4/include
+else
+    LIBS = $(LIBMLX)/libmlx42.a -lglfw -ldl -lm -L "/usr/lib/x86_64-linux-gnu/"
+endif
 
 #---------------SRC------------
 
